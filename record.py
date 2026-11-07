@@ -119,7 +119,9 @@ class Rec:
                 if raw:
                     return resp                                       # the caller streams it and closes it
                 with resp:
-                    return json.load(resp)
+                    out = json.load(resp)
+                self.pause[host] = max(PAUSE.get(host, 0.05), self.pause.get(host, 0.05) * 0.97)   # ease back after a 429
+                return out
             except urllib.error.HTTPError as e:
                 if e.code == 429:
                     self.waits[host] = self.waits.get(host, 0) + 1
@@ -231,6 +233,9 @@ def new_trades(r, key, pages_iter, cap_pages):
     got, n_pages = [], 0
     for items in pages_iter:
         n_pages += 1
+        if n_pages == 1 and len(items) > 1:
+            first, last = trade_ms(items[0]), trade_ms(items[-1])
+            r.count("tape_newest_first" if first >= last else "tape_OLDEST_FIRST")
         stop = False
         for t in items:
             tid, ms = trade_id(t), trade_ms(t)
@@ -285,7 +290,7 @@ def job_novig(r, shard, shards):
             vol = m.get("volume")
             if vol not in (None, 0, "0") and r.state["vol"].get(mid) != vol:
                 trades.append((h if h is not None else 1e9, mid, vol))
-    depth = [100]
+    depth = [20]
     for _, mid in sorted(books):                                     # 2) full books, nearest start first
         if not r.left(reserve=30):
             r.defer("books")
@@ -339,28 +344,26 @@ def job_novig_daily(r):
         if day in done or not r.left(reserve=120):
             continue
         try:
-            mk_rows, mk_hdr, ids = [], [], set()
+            tr_rows, tr_hdr, ids, n_all = [], None, set(), 0
+            with r.get(f"{NOVIG_DAILY}/{day}/trades.csv", raw=True) as resp:
+                rd = csv.reader(io.TextIOWrapper(resp, encoding="utf-8", newline=""))
+                tr_hdr = next(rd)
+                lg, mi = tr_hdr.index("league"), tr_hdr.index("marketId")
+                for row in rd:
+                    n_all += 1
+                    if len(row) > lg and row[lg] == LEAGUE:
+                        tr_rows.append(row)
+                        ids.add(row[mi])
+            mk_rows, mk_hdr = [], []
             try:
                 with r.get(f"{NOVIG_DAILY}/{day}/markets.csv", raw=True) as resp:
                     rd = csv.reader(io.TextIOWrapper(resp, encoding="utf-8", newline=""))
                     mk_hdr = next(rd)
-                    id_cols = [i for i, c in enumerate(mk_hdr) if "market" in c.lower() and "id" in c.lower()]
-                    for row in rd:
-                        if any(LEAGUE in c for c in row):
-                            mk_rows.append(row)
-                            ids.update(row[i] for i in id_cols if i < len(row))
+                    mi = mk_hdr.index("marketId")
+                    mk_rows = [row for row in rd if len(row) > mi and row[mi] in ids]
             except urllib.error.HTTPError as ex:                     # the markets file can lag the trades file by a day
                 if ex.code not in (403, 404):
                     raise
-            tr_rows, tr_hdr = [], None
-            n_all = 0
-            with r.get(f"{NOVIG_DAILY}/{day}/trades.csv", raw=True) as resp:
-                rd = csv.reader(io.TextIOWrapper(resp, encoding="utf-8", newline=""))
-                tr_hdr = next(rd)
-                for row in rd:
-                    n_all += 1
-                    if any(c == LEAGUE or c in ids for c in row):
-                        tr_rows.append(row)
             base = os.path.join(r.out, "data", "novig_daily", day)
             os.makedirs(base, exist_ok=True)
             for name, hdr, rows in (("markets", mk_hdr, mk_rows), ("trades", tr_hdr, tr_rows)):
@@ -458,7 +461,7 @@ def find_leagues(obj, out):
     if isinstance(obj, dict):
         text = " ".join(str(obj.get(k, "")) for k in ("slug", "name", "title", "label", "shortName", "description")).lower()
         slug = obj.get("slug") or obj.get("leagueSlug")
-        if slug and re.search(r"ncaab|\bcbb\b|college basketball|ncaa basketball|ncaam", text) and not re.search(r"wom|ncaaw|wcbb|wbb", text):
+        if slug and re.search(r"ncaab|\bcbb\b|college basketball|ncaa basketball", text) and not re.search(r"wom|ncaaw|wcbb|wbb|soccer", text):
             out.add(str(slug))
         for v in obj.values():
             find_leagues(v, out)
@@ -569,11 +572,15 @@ def job_poly(r):
             r.defer("tapes")
             continue
 
-        def pages(cid=cid):
-            for off in range(0, 5000, 500):
-                d = r.get(f"{PDATA}/trades?" + urllib.parse.urlencode(dict(market=cid, limit=500, offset=off)))
-                yield d if isinstance(d, list) else []
-                if not isinstance(d, list) or len(d) < 500:
+        def pages(cid=cid):                                          # data-api v2 (v1 /trades?market= is retired: 410)
+            cur = None
+            for _ in range(20):
+                body = r.get(f"{PDATA}/v2/trades?" + urllib.parse.urlencode(dict(condition=cid, limit=100, **({"cursor": cur} if cur else {}))))
+                items = (body.get("data") if isinstance(body, dict) else body) or []
+                r.notes.setdefault("poly_trades_keys", sorted(body) if isinstance(body, dict) else "list")
+                yield items
+                cur = (body.get("next_cursor") or body.get("cursor") or body.get("next")) if isinstance(body, dict) else None
+                if not cur or not items or cur in ("LTE=", "-1"):
                     return
         try:
             new_trades(r, cid, pages(), cap_pages=10)
