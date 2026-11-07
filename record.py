@@ -5,7 +5,7 @@ any of these venues, so they have to be recorded as they stand; trades are recor
 
 One job = one venue (Novig is split into shards by event, so each shard reads from its own machine). Each pass writes ONE file:
     data/<UTC date>/<job>/<HHMMSS>.jsonl.gz      one JSON record per line:
-        t     event | list | book | trade | odds | sports | pass
+        t     event | list | book | bbo | trade | odds | sports | pass   (bbo: Polymarket US best bid/offer + trade stats, ~1 a minute near the start)
         k     the record's key (event id, market id, ticker, market slug, token id, game id)
         seen  when this pass read it (UTC, seconds)
         d     the venue's own JSON, unchanged
@@ -40,6 +40,8 @@ DAILY_FROM = "2026-11-01"
 
 EVENT_KEYS = ("id", "slug", "ticker", "title", "startDate", "startTime", "endDate", "gameStartTime", "active", "closed", "ended", "live",
               "archived", "score", "period", "elapsed")             # an event record is rewritten when one of these moves, not its chat count
+PMUS_FAST_H = 3.0                                                   # Polymarket US: bbo sweep for games starting within 3 h
+PMUS_FAST_S = 60.0
 FRESH_H = 12.0
 STALE_MIN = 60.0
 PRUNE_DAYS = 4
@@ -474,11 +476,15 @@ def find_leagues(obj, out):
 
 
 def job_pmus(r):
+    """Every market of every open game (the league's events list embeds only the moneyline; /v1/events/slug/{slug} has the spreads and
+    totals), full books on the usual schedule, then until the pass's time is up a sweep about once a minute of the best bid/offer and
+    trade stats (last trade price, shares traded) of every market whose game starts within PMUS_FAST_H: without an account the venue
+    publishes no trade list, so the change in shares traded and last price minute by minute is the nearest public record of its trades."""
     sports = r.get(f"{PMUS}/v2/sports")
     r.emit("sports", "sports", sports)
     leagues = sorted(find_leagues(sports, set()))
     r.notes["leagues"] = leagues
-    books = []
+    books, fast = [], []
     for lg in leagues:
         off = 0
         while off < 3000:
@@ -495,15 +501,25 @@ def job_pmus(r):
                 ev = {k: v for k, v in e.items() if k != "markets"}
                 r.emit("event", ek, ev, sig_of={k: ev.get(k) for k in EVENT_KEYS})
                 h = hours_to(e.get("startTime"))
-                for m in e.get("markets") or []:
+                mk = e.get("markets") or []
+                if ((e.get("marketCounts") or {}).get("numMarkets") or 0) > len(mk) and e.get("slug") and r.left(reserve=120):
+                    try:
+                        full = r.get(f"{PMUS}/v1/events/slug/{e['slug']}")
+                        mk = ((full.get("event") or full).get("markets") or mk) if isinstance(full, dict) else mk
+                        r.count("events_full")
+                    except Exception as ex:
+                        r.err(f"event {e['slug']}", ex)
+                for m in mk:
                     if m.get("closed") or not m.get("slug"):
                         continue
                     m["_event"] = ek
                     changed = r.emit("list", m["slug"], m)
-                    r.count("markets_" + str(m.get("marketType", "?")))
+                    r.count("markets_" + str(m.get("sportsMarketType") or m.get("marketType") or "?"))
                     hh = h if h is not None else hours_to(m.get("gameStartTime"))
                     if r.due(f"book:{m['slug']}", hh, changed):
                         books.append((hh if hh is not None else 1e9, m["slug"]))
+                    if hh is not None and -0.25 <= hh <= PMUS_FAST_H:
+                        fast.append((hh, m["slug"]))
             off += len(evs)
             if len(evs) < 100:
                 break
@@ -516,6 +532,26 @@ def job_pmus(r):
             r.booked(f"book:{s}")
         except Exception as ex:
             r.err(f"book {s}", ex)
+    fast = [s for _, s in sorted(fast)]
+    r.notes["fast_markets"] = len(fast)
+    sweeps = 0
+    while fast and r.left(reserve=20):
+        t0 = time.time()
+        for s in fast:
+            if not r.left(reserve=15):
+                break
+            try:
+                b = r.get(f"{PMUS}/v1/markets/{s}/bbo")
+                md = (b or {}).get("marketData") or {}
+                r.emit("bbo", s, b, sig_of={k: md.get(k) for k in ("lastTradePx", "sharesTraded", "bestBid", "bestAsk", "bidShares",
+                                                                   "askShares", "openInterest", "state")})
+            except Exception as ex:
+                r.err(f"bbo {s}", ex)
+        sweeps += 1
+        rest = PMUS_FAST_S - (time.time() - t0)
+        if rest > 0 and r.left(reserve=20 + rest):
+            time.sleep(rest)
+    r.notes["fast_sweeps"] = sweeps
 
 
 # ------------------------------------------------------------------ Polymarket (international)
