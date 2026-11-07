@@ -36,6 +36,7 @@ POLY_SERIES = 10470
 ESPN_SITE = "https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball"
 ESPN_CORE = "https://sports.core.api.espn.com/v2/sports/basketball/leagues/mens-college-basketball"
 LEAGUE = "NCAAB"
+DAILY_FROM = "2026-11-01"
 
 FRESH_H = 12.0
 STALE_MIN = 60.0
@@ -114,8 +115,11 @@ class Rec:
             try:
                 r = urllib.request.Request(url, data=data, headers={"Accept": "application/json", "User-Agent": "tracker/1",
                                                                     **({"Content-Type": "application/json"} if data else {})})
-                with urllib.request.urlopen(r, timeout=40) as resp:
-                    return resp if raw else json.load(resp)
+                resp = urllib.request.urlopen(r, timeout=40 if not raw else 300)
+                if raw:
+                    return resp                                       # the caller streams it and closes it
+                with resp:
+                    return json.load(resp)
             except urllib.error.HTTPError as e:
                 if e.code == 429:
                     self.waits[host] = self.waits.get(host, 0) + 1
@@ -329,29 +333,34 @@ def job_novig_daily(r):
     except Exception as ex:
         r.err("index", ex)
         idx = None
-    days = [(NOW - dt.timedelta(days=k)).strftime("%Y-%m-%d") for k in range(1, 6)]
+    days = [d for d in (idx or {}).get("dates") or [] if d >= DAILY_FROM]
+    days = days or [(NOW - dt.timedelta(days=k)).strftime("%Y-%m-%d") for k in range(1, 6)]
     for day in sorted(days):
         if day in done or not r.left(reserve=120):
             continue
         try:
-            mk_rows, mk_hdr, ids = [], None, set()
-            resp = r.get(f"{NOVIG_DAILY}/{day}/markets.csv", raw=True)
-            rd = csv.reader(io.TextIOWrapper(resp, encoding="utf-8", newline=""))
-            mk_hdr = next(rd)
-            id_cols = [i for i, c in enumerate(mk_hdr) if "market" in c.lower() and "id" in c.lower()]
-            for row in rd:
-                if any(LEAGUE in c for c in row):
-                    mk_rows.append(row)
-                    ids.update(row[i] for i in id_cols if i < len(row))
+            mk_rows, mk_hdr, ids = [], [], set()
+            try:
+                with r.get(f"{NOVIG_DAILY}/{day}/markets.csv", raw=True) as resp:
+                    rd = csv.reader(io.TextIOWrapper(resp, encoding="utf-8", newline=""))
+                    mk_hdr = next(rd)
+                    id_cols = [i for i, c in enumerate(mk_hdr) if "market" in c.lower() and "id" in c.lower()]
+                    for row in rd:
+                        if any(LEAGUE in c for c in row):
+                            mk_rows.append(row)
+                            ids.update(row[i] for i in id_cols if i < len(row))
+            except urllib.error.HTTPError as ex:                     # the markets file can lag the trades file by a day
+                if ex.code not in (403, 404):
+                    raise
             tr_rows, tr_hdr = [], None
-            resp = r.get(f"{NOVIG_DAILY}/{day}/trades.csv", raw=True)
-            rd = csv.reader(io.TextIOWrapper(resp, encoding="utf-8", newline=""))
-            tr_hdr = next(rd)
             n_all = 0
-            for row in rd:
-                n_all += 1
-                if any(c == LEAGUE or c in ids for c in row):
-                    tr_rows.append(row)
+            with r.get(f"{NOVIG_DAILY}/{day}/trades.csv", raw=True) as resp:
+                rd = csv.reader(io.TextIOWrapper(resp, encoding="utf-8", newline=""))
+                tr_hdr = next(rd)
+                for row in rd:
+                    n_all += 1
+                    if any(c == LEAGUE or c in ids for c in row):
+                        tr_rows.append(row)
             base = os.path.join(r.out, "data", "novig_daily", day)
             os.makedirs(base, exist_ok=True)
             for name, hdr, rows in (("markets", mk_hdr, mk_rows), ("trades", tr_hdr, tr_rows)):
@@ -360,7 +369,8 @@ def job_novig_daily(r):
                     w.writerow(hdr)
                     w.writerows(rows)
             r.notes[day] = dict(markets=len(mk_rows), trades=len(tr_rows), trades_all_sports=n_all, market_cols=mk_hdr, trade_cols=tr_hdr)
-            done.add(day)
+            if mk_hdr:                                                # redo a day whose markets file was not out yet
+                done.add(day)
         except urllib.error.HTTPError as ex:
             if ex.code in (403, 404):
                 r.notes[day] = f"not published yet ({ex.code})"

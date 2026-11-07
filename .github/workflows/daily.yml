@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: [".github/workflows/daily.yml"]
+    paths: ["record.py", ".github/workflows/daily.yml"]
 
 concurrency:
   group: daily
@@ -59,8 +59,8 @@ jobs:
           [ -d out ] || { echo "nothing read"; exit 0; }
           cd repo
           cp -R ../out/. .
-          git config user.name tracker
-          git config user.email tracker@users.noreply.github.com
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add --sparse -A data status
           if git diff --cached --quiet; then echo "no change"; exit 0; fi
           git commit -q -m "daily $(date -u +%Y-%m-%dT%H:%MZ)"
