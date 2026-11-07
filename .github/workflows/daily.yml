@@ -1,0 +1,71 @@
+name: daily
+
+# Novig's own daily trade files (every trade, all sports): the NCAAB rows of each recent day not yet done (record.py --job
+# novig_daily). Twice a day in case a file is published late.
+
+on:
+  schedule:
+    - cron: "37 9 * * *"
+    - cron: "37 17 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".github/workflows/daily.yml"]
+
+concurrency:
+  group: daily
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  daily:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          sparse-checkout: record.py
+          sparse-checkout-cone-mode: false
+
+      - uses: actions/cache/restore@v4
+        with:
+          path: state
+          key: state-novig_daily-${{ github.run_id }}
+          restore-keys: state-novig_daily-
+
+      - name: Read
+        run: python3 record.py --job novig_daily --out out --state state/state.json --budget 1200
+
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: state
+          key: state-novig_daily-${{ github.run_id }}
+
+      - uses: actions/checkout@v5
+        with:
+          ref: data
+          path: repo
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: README.md
+          sparse-checkout-cone-mode: false
+
+      - name: Commit
+        run: |
+          set -euo pipefail
+          [ -d out ] || { echo "nothing read"; exit 0; }
+          cd repo
+          cp -R ../out/. .
+          git config user.name tracker
+          git config user.email tracker@users.noreply.github.com
+          git add --sparse -A data status
+          if git diff --cached --quiet; then echo "no change"; exit 0; fi
+          git commit -q -m "daily $(date -u +%Y-%m-%dT%H:%MZ)"
+          for i in 1 2 3 4 5; do
+            git pull --rebase -q origin data && git push -q origin HEAD:data && exit 0
+            echo "push attempt $i failed"; sleep $((i * 4))
+          done
+          exit 1

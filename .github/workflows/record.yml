@@ -1,0 +1,106 @@
+name: record
+
+# Every 20 minutes (record.py). Public repository: the minutes are free. Each venue reads from its own machine (Novig, the slowest,
+# split four ways by event), writes one file, and hands it to the commit job, which pushes everything to the `data` branch in one
+# commit. max-parallel keeps this to a few machines at a time. A run that is still going when the next is due makes the next wait.
+
+on:
+  schedule:
+    - cron: "3,23,43 * * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["record.py", ".github/workflows/record.yml"]
+
+concurrency:
+  group: record
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  read:
+    runs-on: ubuntu-latest
+    timeout-minutes: 17
+    strategy:
+      fail-fast: false
+      max-parallel: 5
+      matrix:
+        include:
+          - { job: novig, shard: 0, shards: 4 }
+          - { job: novig, shard: 1, shards: 4 }
+          - { job: novig, shard: 2, shards: 4 }
+          - { job: novig, shard: 3, shards: 4 }
+          - { job: kalshi, shard: 0, shards: 1 }
+          - { job: pmus, shard: 0, shards: 1 }
+          - { job: poly, shard: 0, shards: 1 }
+          - { job: espn, shard: 0, shards: 1 }
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          sparse-checkout: record.py
+          sparse-checkout-cone-mode: false
+
+      - uses: actions/cache/restore@v4
+        with:
+          path: state
+          key: state-${{ matrix.job }}-${{ matrix.shard }}-${{ github.run_id }}
+          restore-keys: state-${{ matrix.job }}-${{ matrix.shard }}-
+
+      # Standard library only: no setup-python, no pip.
+      - name: Read
+        run: python3 record.py --job ${{ matrix.job }} --shard ${{ matrix.shard }} --shards ${{ matrix.shards }} --out out --state state/state.json --budget 780
+
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: state
+          key: state-${{ matrix.job }}-${{ matrix.shard }}-${{ github.run_id }}
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: out-${{ matrix.job }}-${{ matrix.shard }}
+          path: out
+          retention-days: 1
+          if-no-files-found: ignore
+
+  commit:
+    needs: read
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: out-*
+          merge-multiple: true
+          path: out
+
+      # Only README.md is checked out: the commit adds new files without downloading the ones already there.
+      - uses: actions/checkout@v5
+        with:
+          ref: data
+          path: repo
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: README.md
+          sparse-checkout-cone-mode: false
+
+      - name: Commit
+        run: |
+          set -euo pipefail
+          [ -d out ] || { echo "nothing read"; exit 0; }
+          cd repo
+          cp -R ../out/. .
+          git config user.name tracker
+          git config user.email tracker@users.noreply.github.com
+          git add --sparse -A data status
+          if git diff --cached --quiet; then echo "no change"; exit 0; fi
+          git commit -q -m "record $(date -u +%Y-%m-%dT%H:%MZ)"
+          for i in 1 2 3 4 5; do
+            git pull --rebase -q origin data && git push -q origin HEAD:data && exit 0
+            echo "push attempt $i failed"; sleep $((i * 4))
+          done
+          exit 1
