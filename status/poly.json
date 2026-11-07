@@ -1,33 +1,12 @@
 {
  "budget_s": 780.0,
  "calls": {
-  "clob.polymarket.com": 9,
-  "data-api.polymarket.com": 234,
+  "clob.polymarket.com": 8,
+  "data-api.polymarket.com": 236,
   "gamma-api.polymarket.com": 4
  },
  "deferred": {},
- "errors": [
-  "trades 0xa29671ac746dd66ac362e4b7f3d6722026d39254eaf6b1d56534cdb88917232e: HTTPError: HTTP Error 410: Gone",
-  "trades 0x6ebbe3f3eeefd036cd85c5f3b686311364f5ff29ca47061b2b8cce15b56bea5a: HTTPError: HTTP Error 410: Gone",
-  "trades 0x0e4ffd9d69bddca6f267844f3d0ae2432c74319ca3b33fd87c929c10a615be17: HTTPError: HTTP Error 410: Gone",
-  "trades 0x1f7ffc1a0335efcb3c2b358f112a35a27e47e27fbdb30fd419b4687f5eddc6fd: HTTPError: HTTP Error 410: Gone",
-  "trades 0x70625a0b508a11c5b971fe0b7b9baa73f2e614a687837eed407a2b4a75ef3b20: HTTPError: HTTP Error 410: Gone",
-  "trades 0x86873e4dbe7c99b28cb638edcd18ee27ecb17f697fdd28817f3f03ec781a4551: HTTPError: HTTP Error 410: Gone",
-  "trades 0xa57c620e217d81a0d7827ceab9cbbf07247f50d93402c95ca156df698505a0c6: HTTPError: HTTP Error 410: Gone",
-  "trades 0x52b95ece9294a997019ae3875583d30f7662d879bb8d93c146a6e5776ecb6d0f: HTTPError: HTTP Error 410: Gone",
-  "trades 0xc049ea17b93fcbd9cf580e3dba0ee17b8ac6baaf5c22b911ae689651d27f8b73: HTTPError: HTTP Error 410: Gone",
-  "trades 0x49edbc4c4c63ab329edc09da24e0182d62f61829bced267eb8ac174786b3c60a: HTTPError: HTTP Error 410: Gone",
-  "trades 0xe79cb7593970e67617f672db353353f49de85f67fe4d63935d4658c572f0bb47: HTTPError: HTTP Error 410: Gone",
-  "trades 0xffe8045233d6a441e3eeddac0346d72619d664f0ec882dd4f66c7dd93750bf4e: HTTPError: HTTP Error 410: Gone",
-  "trades 0x6952ebbc291be59d38e584e9824c9625d2e27d6c1d0591f8def4c60140d941cf: HTTPError: HTTP Error 410: Gone",
-  "trades 0xba4aa0ddb7d74e87935f35915490d861094b664f8f061566ded3b89c1c705795: HTTPError: HTTP Error 410: Gone",
-  "trades 0x376807e429ee4a861b2f70660b0f5d330327ce1ca25a521dc37702fd010d697e: HTTPError: HTTP Error 410: Gone",
-  "trades 0xb06616fcce94c4c265fb819ccdff8e88da299d5b8e0c4f5c596c0224150d0c48: HTTPError: HTTP Error 410: Gone",
-  "trades 0x2310b7911e374f7c0291ea3090836df8aabe36bb3d4bb4f77442b5793097aa89: HTTPError: HTTP Error 410: Gone",
-  "trades 0x5009d87fac2c89dae39367984a47c6d8bc651b3b132bd2cdcff4936734764741: HTTPError: HTTP Error 410: Gone",
-  "trades 0xaa30365fd3f929bcae5e8d9bfa7c3ef9a9efe2b2781847aa4d96495f3a0ca993: HTTPError: HTTP Error 410: Gone",
-  "trades 0x7f927133b08101da64f3488b29158b0ab328381efc8c43179e5c69c79ce248b9: HTTPError: HTTP Error 410: Gone"
- ],
+ "errors": [],
  "final_pause": {
   "api.elections.kalshi.com": 0.07,
   "api.novig.com": 0.45,
@@ -41,17 +20,22 @@
  },
  "job": "poly",
  "notes": {
-  "events": 364
+  "events": 364,
+  "poly_trades_keys": [
+   "data",
+   "pagination"
+  ]
  },
  "rate_limit_waits": {},
- "seconds": 21.0,
- "started": "2026-11-07T22:48:24Z",
+ "seconds": 48.5,
+ "started": "2026-11-07T22:52:37Z",
  "written": {
-  "book": 624,
-  "book_same": 188,
-  "errors": 234,
+  "book": 526,
+  "book_same": 228,
   "event": 364,
-  "list": 347,
-  "list_same": 326
+  "list": 299,
+  "list_same": 374,
+  "tape_newest_first": 198,
+  "trade": 2590
  }
 }

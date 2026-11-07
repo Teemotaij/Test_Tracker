@@ -1,7 +1,7 @@
 {
  "budget_s": 780.0,
  "calls": {
-  "gateway.polymarket.us": 88
+  "gateway.polymarket.us": 73
  },
  "deferred": {},
  "errors": [],
@@ -19,19 +19,19 @@
  "job": "pmus",
  "notes": {
   "leagues": [
-   "cbb",
-   "ncaams"
+   "cbb"
   ]
  },
  "rate_limit_waits": {},
- "seconds": 11.0,
- "started": "2026-11-07T22:48:06Z",
+ "seconds": 9.2,
+ "started": "2026-11-07T22:52:20Z",
  "written": {
-  "book": 71,
-  "book_same": 7,
-  "event": 773,
-  "list": 56,
-  "list_same": 717,
+  "book": 59,
+  "book_same": 5,
+  "event": 63,
+  "event_same": 710,
+  "list": 31,
+  "list_same": 742,
   "markets_moneyline": 773,
   "sports": 1
  }
