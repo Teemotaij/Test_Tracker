@@ -613,16 +613,17 @@ def job_poly(r):
             continue
 
         def pages(cid=cid):                                          # data-api v2 (v1 /trades?market= is retired: 410)
-            cur = None
+            cur, off = None, 0                                       # pagination: {has_more, limit, next_cursor, offset}
             for _ in range(20):
-                body = r.get(f"{PDATA}/v2/trades?" + urllib.parse.urlencode(dict(condition=cid, limit=100, **({"cursor": cur} if cur else {}))))
+                q = dict(condition=cid, limit=100, **({"cursor": cur} if cur else {"offset": off} if off else {}))
+                body = r.get(f"{PDATA}/v2/trades?" + urllib.parse.urlencode(q))
                 items = (body.get("data") if isinstance(body, dict) else body) or []
                 pag = (body.get("pagination") or {}) if isinstance(body, dict) else {}
-                r.notes.setdefault("poly_pagination", pag)
                 yield items
-                cur = pag.get("next_cursor") or pag.get("nextCursor") or pag.get("cursor") or pag.get("next")
-                if not cur or not items or cur in ("LTE=", "-1") or pag.get("has_more") is False or pag.get("hasMore") is False:
+                if not items or not (pag.get("has_more") or pag.get("hasMore")):
                     return
+                cur = pag.get("next_cursor") or pag.get("nextCursor")
+                off += len(items)
         try:
             new_trades(r, cid, pages(), cap_pages=10)
             r.state["vol"][cid] = v
