@@ -38,6 +38,8 @@ ESPN_CORE = "https://sports.core.api.espn.com/v2/sports/basketball/leagues/mens-
 LEAGUE = "NCAAB"
 DAILY_FROM = "2026-11-01"
 
+EVENT_KEYS = ("id", "slug", "ticker", "title", "startDate", "startTime", "endDate", "gameStartTime", "active", "closed", "ended", "live",
+              "archived", "score", "period", "elapsed")             # an event record is rewritten when one of these moves, not its chat count
 FRESH_H = 12.0
 STALE_MIN = 60.0
 PRUNE_DAYS = 4
@@ -490,7 +492,8 @@ def job_pmus(r):
                 if e.get("ended") or e.get("closed"):
                     continue
                 ek = e.get("slug") or e.get("id")
-                r.emit("event", ek, {k: v for k, v in e.items() if k != "markets"})
+                ev = {k: v for k, v in e.items() if k != "markets"}
+                r.emit("event", ek, ev, sig_of={k: ev.get(k) for k in EVENT_KEYS})
                 h = hours_to(e.get("startTime"))
                 for m in e.get("markets") or []:
                     if m.get("closed") or not m.get("slug"):
@@ -533,7 +536,8 @@ def job_poly(r):
     r.notes["events"] = len(events)
     tokens, trades = [], []
     for e in events:
-        r.emit("event", e.get("id"), {k: v for k, v in e.items() if k != "markets"})
+        ev = {k: v for k, v in e.items() if k != "markets"}
+        r.emit("event", e.get("id"), ev, sig_of={k: ev.get(k) for k in EVENT_KEYS})
         for m in e.get("markets") or []:
             cid = m.get("conditionId")
             if not cid or m.get("closed"):
@@ -577,10 +581,11 @@ def job_poly(r):
             for _ in range(20):
                 body = r.get(f"{PDATA}/v2/trades?" + urllib.parse.urlencode(dict(condition=cid, limit=100, **({"cursor": cur} if cur else {}))))
                 items = (body.get("data") if isinstance(body, dict) else body) or []
-                r.notes.setdefault("poly_trades_keys", sorted(body) if isinstance(body, dict) else "list")
+                pag = (body.get("pagination") or {}) if isinstance(body, dict) else {}
+                r.notes.setdefault("poly_pagination", pag)
                 yield items
-                cur = (body.get("next_cursor") or body.get("cursor") or body.get("next")) if isinstance(body, dict) else None
-                if not cur or not items or cur in ("LTE=", "-1"):
+                cur = pag.get("next_cursor") or pag.get("nextCursor") or pag.get("cursor") or pag.get("next")
+                if not cur or not items or cur in ("LTE=", "-1") or pag.get("has_more") is False or pag.get("hasMore") is False:
                     return
         try:
             new_trades(r, cid, pages(), cap_pages=10)
