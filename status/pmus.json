@@ -1,7 +1,7 @@
 {
  "budget_s": 780.0,
  "calls": {
-  "gateway.polymarket.us": 73
+  "gateway.polymarket.us": 85
  },
  "deferred": {},
  "errors": [],
@@ -23,16 +23,15 @@
   ]
  },
  "rate_limit_waits": {},
- "seconds": 9.2,
- "started": "2026-11-07T22:52:20Z",
+ "seconds": 7.3,
+ "started": "2026-11-07T23:02:42Z",
  "written": {
-  "book": 59,
-  "book_same": 5,
-  "event": 63,
-  "event_same": 710,
-  "list": 31,
-  "list_same": 742,
-  "markets_moneyline": 773,
+  "book": 73,
+  "book_same": 3,
+  "event": 770,
+  "list": 60,
+  "list_same": 710,
+  "markets_moneyline": 770,
   "sports": 1
  }
 }
