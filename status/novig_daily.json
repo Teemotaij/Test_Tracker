@@ -1,16 +1,10 @@
 {
  "budget_s": 1200.0,
  "calls": {
-  "data.novig.com": 6
+  "data.novig.com": 13
  },
  "deferred": {},
- "errors": [
-  "daily 2026-11-02: ValueError: I/O operation on closed file.",
-  "daily 2026-11-03: ValueError: I/O operation on closed file.",
-  "daily 2026-11-04: ValueError: I/O operation on closed file.",
-  "daily 2026-11-05: ValueError: I/O operation on closed file.",
-  "daily 2026-11-06: ValueError: I/O operation on closed file."
- ],
+ "errors": [],
  "final_pause": {
   "api.elections.kalshi.com": 0.07,
   "api.novig.com": 0.45,
@@ -23,12 +17,192 @@
   "sports.core.api.espn.com": 0.03
  },
  "job": "novig_daily",
- "notes": {},
+ "notes": {
+  "2026-11-01": {
+   "market_cols": [
+    "date",
+    "marketId",
+    "reportTicker",
+    "openInterest",
+    "dailyVolume",
+    "open",
+    "high",
+    "low",
+    "close",
+    "status"
+   ],
+   "markets": 5034,
+   "trade_cols": [
+    "timestamp",
+    "outcomeId",
+    "marketId",
+    "contractSeries",
+    "league",
+    "marketType",
+    "tradeType",
+    "legs",
+    "cost",
+    "qty",
+    "side"
+   ],
+   "trades": 20673,
+   "trades_all_sports": 1346816
+  },
+  "2026-11-02": {
+   "market_cols": [
+    "date",
+    "marketId",
+    "reportTicker",
+    "openInterest",
+    "dailyVolume",
+    "open",
+    "high",
+    "low",
+    "close",
+    "status"
+   ],
+   "markets": 12738,
+   "trade_cols": [
+    "timestamp",
+    "outcomeId",
+    "marketId",
+    "contractSeries",
+    "league",
+    "marketType",
+    "tradeType",
+    "legs",
+    "cost",
+    "qty",
+    "side"
+   ],
+   "trades": 206179,
+   "trades_all_sports": 1142961
+  },
+  "2026-11-03": {
+   "market_cols": [
+    "date",
+    "marketId",
+    "reportTicker",
+    "openInterest",
+    "dailyVolume",
+    "open",
+    "high",
+    "low",
+    "close",
+    "status"
+   ],
+   "markets": 3681,
+   "trade_cols": [
+    "timestamp",
+    "outcomeId",
+    "marketId",
+    "contractSeries",
+    "league",
+    "marketType",
+    "tradeType",
+    "legs",
+    "cost",
+    "qty",
+    "side"
+   ],
+   "trades": 91488,
+   "trades_all_sports": 838372
+  },
+  "2026-11-04": {
+   "market_cols": [
+    "date",
+    "marketId",
+    "reportTicker",
+    "openInterest",
+    "dailyVolume",
+    "open",
+    "high",
+    "low",
+    "close",
+    "status"
+   ],
+   "markets": 2882,
+   "trade_cols": [
+    "timestamp",
+    "outcomeId",
+    "marketId",
+    "contractSeries",
+    "league",
+    "marketType",
+    "tradeType",
+    "legs",
+    "cost",
+    "qty",
+    "side"
+   ],
+   "trades": 35346,
+   "trades_all_sports": 994797
+  },
+  "2026-11-05": {
+   "market_cols": [
+    "date",
+    "marketId",
+    "reportTicker",
+    "openInterest",
+    "dailyVolume",
+    "open",
+    "high",
+    "low",
+    "close",
+    "status"
+   ],
+   "markets": 6560,
+   "trade_cols": [
+    "timestamp",
+    "outcomeId",
+    "marketId",
+    "contractSeries",
+    "league",
+    "marketType",
+    "tradeType",
+    "legs",
+    "cost",
+    "qty",
+    "side"
+   ],
+   "trades": 209512,
+   "trades_all_sports": 1180930
+  },
+  "2026-11-06": {
+   "market_cols": [
+    "date",
+    "marketId",
+    "reportTicker",
+    "openInterest",
+    "dailyVolume",
+    "open",
+    "high",
+    "low",
+    "close",
+    "status"
+   ],
+   "markets": 7188,
+   "trade_cols": [
+    "timestamp",
+    "outcomeId",
+    "marketId",
+    "contractSeries",
+    "league",
+    "marketType",
+    "tradeType",
+    "legs",
+    "cost",
+    "qty",
+    "side"
+   ],
+   "trades": 258539,
+   "trades_all_sports": 1168775
+  }
+ },
  "rate_limit_waits": {},
- "seconds": 1.4,
- "started": "2026-11-07T22:38:15Z",
+ "seconds": 17.0,
+ "started": "2026-11-07T22:43:55Z",
  "written": {
-  "daily_index": 1,
-  "errors": 5
+  "daily_index_same": 1
  }
 }
