@@ -1,0 +1,36 @@
+{
+ "budget_s": 780.0,
+ "calls": {
+  "gateway.polymarket.us": 785
+ },
+ "deferred": {},
+ "errors": [],
+ "final_pause": {
+  "api.elections.kalshi.com": 0.07,
+  "api.novig.com": 0.45,
+  "clob.polymarket.com": 0.05,
+  "data-api.polymarket.com": 0.08,
+  "data.novig.com": 0.2,
+  "gamma-api.polymarket.com": 0.05,
+  "gateway.polymarket.us": 0.06,
+  "site.api.espn.com": 0.03,
+  "sports.core.api.espn.com": 0.03
+ },
+ "job": "pmus",
+ "notes": {
+  "leagues": [
+   "cbb",
+   "ncaams"
+  ]
+ },
+ "rate_limit_waits": {},
+ "seconds": 73.3,
+ "started": "2026-11-07T22:40:24Z",
+ "written": {
+  "book": 775,
+  "event": 775,
+  "list": 775,
+  "markets_moneyline": 775,
+  "sports": 1
+ }
+}

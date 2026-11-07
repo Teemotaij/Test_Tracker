@@ -1,0 +1,31 @@
+{
+ "budget_s": 780.0,
+ "calls": {
+  "site.api.espn.com": 5,
+  "sports.core.api.espn.com": 180
+ },
+ "deferred": {},
+ "errors": [],
+ "final_pause": {
+  "api.elections.kalshi.com": 0.07,
+  "api.novig.com": 0.45,
+  "clob.polymarket.com": 0.05,
+  "data-api.polymarket.com": 0.08,
+  "data.novig.com": 0.2,
+  "gamma-api.polymarket.com": 0.05,
+  "gateway.polymarket.us": 0.06,
+  "site.api.espn.com": 0.03,
+  "sports.core.api.espn.com": 0.03
+ },
+ "job": "espn",
+ "notes": {
+  "games": 288
+ },
+ "rate_limit_waits": {},
+ "seconds": 15.9,
+ "started": "2026-11-07T22:41:28Z",
+ "written": {
+  "event": 288,
+  "odds": 180
+ }
+}

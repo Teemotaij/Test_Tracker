@@ -1,0 +1,46 @@
+{
+ "budget_s": 780.0,
+ "calls": {
+  "api.novig.com": 474
+ },
+ "deferred": {},
+ "errors": [
+  "book 01a1b365-3c2c-7060-a8d7-79c678235c22: HTTPError: HTTP Error 400: Bad Request"
+ ],
+ "final_pause": {
+  "api.elections.kalshi.com": 0.07,
+  "api.novig.com": 0.6350000000000001,
+  "clob.polymarket.com": 0.05,
+  "data-api.polymarket.com": 0.08,
+  "data.novig.com": 0.2,
+  "gamma-api.polymarket.com": 0.05,
+  "gateway.polymarket.us": 0.06,
+  "site.api.espn.com": 0.03,
+  "sports.core.api.espn.com": 0.03
+ },
+ "job": "novig-2",
+ "notes": {
+  "book_depth": 20,
+  "events_listed": 38,
+  "events_mine": 11
+ },
+ "rate_limit_waits": {
+  "api.novig.com": 1
+ },
+ "seconds": 288.1,
+ "started": "2026-11-07T22:38:14Z",
+ "written": {
+  "book": 371,
+  "errors": 1,
+  "event": 11,
+  "list": 372,
+  "markets_MONEY": 11,
+  "markets_MONEY_1H": 6,
+  "markets_SPREAD": 127,
+  "markets_SPREAD_1H": 6,
+  "markets_TEAM_TOTAL": 29,
+  "markets_TOTAL": 181,
+  "markets_TOTAL_1H": 12,
+  "trade": 3880
+ }
+}
