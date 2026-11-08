@@ -1,7 +1,7 @@
 {
  "budget_s": 780.0,
  "calls": {
-  "gateway.polymarket.us": 587
+  "gateway.polymarket.us": 865
  },
  "deferred": {},
  "errors": [],
@@ -25,21 +25,20 @@
   ]
  },
  "rate_limit_waits": {},
- "seconds": 65.3,
- "started": "2026-11-08T05:12:15Z",
+ "seconds": 94.2,
+ "started": "2026-11-08T05:26:11Z",
  "written": {
-  "book": 476,
-  "book_same": 50,
-  "event": 38,
-  "event_same": 730,
-  "events_full": 52,
-  "list": 407,
-  "list_same": 1969,
+  "book": 722,
+  "book_same": 84,
+  "event_same": 766,
+  "events_full": 50,
+  "list": 152,
+  "list_same": 2098,
   "markets_basketball_game_race_to_points": 450,
-  "markets_basketball_team_full_game_spread": 516,
-  "markets_basketball_team_full_game_total": 540,
-  "markets_basketball_team_full_game_winner": 768,
-  "markets_basketball_team_total_points": 102,
+  "markets_basketball_team_full_game_spread": 462,
+  "markets_basketball_team_full_game_total": 482,
+  "markets_basketball_team_full_game_winner": 766,
+  "markets_basketball_team_total_points": 90,
   "sports": 1
  }
 }
