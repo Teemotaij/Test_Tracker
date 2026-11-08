@@ -2,7 +2,7 @@
  "budget_s": 780.0,
  "calls": {
   "clob.polymarket.com": 8,
-  "data-api.polymarket.com": 19,
+  "data-api.polymarket.com": 25,
   "gamma-api.polymarket.com": 4
  },
  "deferred": {},
@@ -23,16 +23,16 @@
   "events": 380
  },
  "rate_limit_waits": {},
- "seconds": 7.1,
- "started": "2026-11-08T18:29:59Z",
+ "seconds": 9.9,
+ "started": "2026-11-08T18:47:53Z",
  "written": {
-  "book": 564,
-  "book_same": 138,
-  "event": 10,
-  "event_same": 370,
-  "list": 271,
-  "list_same": 281,
-  "tape_newest_first": 18,
-  "trade": 52
+  "book": 638,
+  "book_same": 94,
+  "event": 11,
+  "event_same": 369,
+  "list": 355,
+  "list_same": 197,
+  "tape_newest_first": 24,
+  "trade": 76
  }
 }
