@@ -18,7 +18,7 @@
  },
  "job": "novig_daily",
  "notes": {
-  "2026-11-07": {
+  "2026-11-08": {
    "market_cols": [
     "date",
     "marketId",
@@ -31,7 +31,7 @@
     "close",
     "status"
    ],
-   "markets": 1411,
+   "markets": 994,
    "trade_cols": [
     "timestamp",
     "outcomeId",
@@ -45,13 +45,13 @@
     "qty",
     "side"
    ],
-   "trades": 143380,
-   "trades_all_sports": 1734849
+   "trades": 138428,
+   "trades_all_sports": 1665712
   }
  },
  "rate_limit_waits": {},
- "seconds": 2.9,
- "started": "2026-11-09T09:38:56Z",
+ "seconds": 4.2,
+ "started": "2026-11-09T17:39:39Z",
  "written": {
   "daily_index": 1
  }
