@@ -2,7 +2,7 @@
  "budget_s": 780.0,
  "calls": {
   "site.api.espn.com": 5,
-  "sports.core.api.espn.com": 166
+  "sports.core.api.espn.com": 226
  },
  "deferred": {},
  "errors": [],
@@ -19,15 +19,15 @@
  },
  "job": "espn",
  "notes": {
-  "games": 251
+  "games": 276
  },
  "rate_limit_waits": {},
- "seconds": 25.6,
- "started": "2026-11-10T04:47:56Z",
+ "seconds": 35.4,
+ "started": "2026-11-10T05:17:19Z",
  "written": {
-  "event": 26,
-  "event_same": 225,
-  "odds": 16,
-  "odds_same": 150
+  "event": 106,
+  "event_same": 170,
+  "odds": 104,
+  "odds_same": 122
  }
 }
