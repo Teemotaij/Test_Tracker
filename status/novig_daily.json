@@ -1,7 +1,7 @@
 {
  "budget_s": 1200.0,
  "calls": {
-  "data.novig.com": 1
+  "data.novig.com": 3
  },
  "deferred": {},
  "errors": [],
@@ -17,11 +17,42 @@
   "sports.core.api.espn.com": 0.03
  },
  "job": "novig_daily",
- "notes": {},
+ "notes": {
+  "2026-11-11": {
+   "market_cols": [
+    "date",
+    "marketId",
+    "reportTicker",
+    "openInterest",
+    "dailyVolume",
+    "open",
+    "high",
+    "low",
+    "close",
+    "status"
+   ],
+   "markets": 1795,
+   "trade_cols": [
+    "timestamp",
+    "outcomeId",
+    "marketId",
+    "contractSeries",
+    "league",
+    "marketType",
+    "tradeType",
+    "legs",
+    "cost",
+    "qty",
+    "side"
+   ],
+   "trades": 405640,
+   "trades_all_sports": 1349940
+  }
+ },
  "rate_limit_waits": {},
- "seconds": 0.3,
- "started": "2026-11-12T09:39:36Z",
+ "seconds": 5.0,
+ "started": "2026-11-12T17:40:05Z",
  "written": {
-  "daily_index_same": 1
+  "daily_index": 1
  }
 }
