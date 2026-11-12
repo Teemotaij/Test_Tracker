@@ -1,8 +1,8 @@
 {
  "budget_s": 780.0,
  "calls": {
-  "clob.polymarket.com": 8,
-  "data-api.polymarket.com": 6,
+  "clob.polymarket.com": 7,
+  "data-api.polymarket.com": 1,
   "gamma-api.polymarket.com": 4
  },
  "deferred": {},
@@ -20,18 +20,17 @@
  },
  "job": "poly",
  "notes": {
-  "events": 374
+  "events": 364
  },
  "rate_limit_waits": {},
- "seconds": 4.7,
- "started": "2026-11-12T08:18:37Z",
+ "seconds": 4.0,
+ "started": "2026-11-12T08:29:19Z",
  "written": {
-  "book": 554,
-  "book_same": 196,
-  "event_same": 374,
-  "list": 286,
-  "list_same": 183,
-  "tape_newest_first": 5,
-  "trade": 11
+  "book": 417,
+  "book_same": 183,
+  "event_same": 364,
+  "list": 232,
+  "list_same": 227,
+  "tape_newest_first": 1
  }
 }
