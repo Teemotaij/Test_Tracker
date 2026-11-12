@@ -1,12 +1,12 @@
 {
  "budget_s": 780.0,
  "calls": {
-  "api.elections.kalshi.com": 933
+  "api.elections.kalshi.com": 956
  },
  "deferred": {},
  "errors": [],
  "final_pause": {
-  "api.elections.kalshi.com": 0.11027850796963107,
+  "api.elections.kalshi.com": 0.12292113167823779,
   "api.novig.com": 0.45,
   "clob.polymarket.com": 0.05,
   "data-api.polymarket.com": 0.08,
@@ -18,25 +18,25 @@
  },
  "job": "kalshi",
  "notes": {
-  "markets_open": 1031
+  "markets_open": 1039
  },
  "rate_limit_waits": {
   "api.elections.kalshi.com": 4
  },
- "seconds": 82.8,
- "started": "2026-11-12T13:46:04Z",
+ "seconds": 107.0,
+ "started": "2026-11-12T14:13:30Z",
  "written": {
-  "book": 817,
-  "book_same": 21,
-  "list": 757,
-  "list_same": 274,
+  "book": 848,
+  "book_same": 13,
+  "list": 781,
+  "list_same": 258,
   "markets_KXNCAAMB1HSPREAD": 13,
   "markets_KXNCAAMB1HTOTAL": 13,
   "markets_KXNCAAMBGAME": 350,
-  "markets_KXNCAAMBSPREAD": 289,
-  "markets_KXNCAAMBTOTAL": 342,
+  "markets_KXNCAAMBSPREAD": 291,
+  "markets_KXNCAAMBTOTAL": 348,
   "markets_KXNCAAMBWINMARGIN": 24,
-  "tape_newest_first": 81,
-  "trade": 223
+  "tape_newest_first": 79,
+  "trade": 331
  }
 }
