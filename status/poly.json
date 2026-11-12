@@ -1,12 +1,12 @@
 {
  "budget_s": 780.0,
  "calls": {
-  "clob.polymarket.com": 7,
-  "data-api.polymarket.com": 3,
-  "gamma-api.polymarket.com": 4
+  "gamma-api.polymarket.com": 1
  },
  "deferred": {},
- "errors": [],
+ "errors": [
+  "gamma events: HTTPError: HTTP Error 406: Not Acceptable"
+ ],
  "final_pause": {
   "api.elections.kalshi.com": 0.07,
   "api.novig.com": 0.45,
@@ -20,18 +20,12 @@
  },
  "job": "poly",
  "notes": {
-  "events": 364
+  "events": 0
  },
  "rate_limit_waits": {},
- "seconds": 4.4,
- "started": "2026-11-12T12:33:51Z",
+ "seconds": 0.2,
+ "started": "2026-11-12T12:47:22Z",
  "written": {
-  "book": 448,
-  "book_same": 214,
-  "event_same": 364,
-  "list": 277,
-  "list_same": 187,
-  "tape_newest_first": 3,
-  "trade": 2
+  "errors": 1
  }
 }
