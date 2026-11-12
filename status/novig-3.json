@@ -25,17 +25,18 @@
  "rate_limit_waits": {
   "api.novig.com": 2
  },
- "seconds": 59.9,
- "started": "2026-11-12T08:45:23Z",
+ "seconds": 59.8,
+ "started": "2026-11-12T09:14:44Z",
  "written": {
-  "book": 116,
-  "book_same": 3,
+  "book": 114,
   "event_same": 5,
-  "list": 119,
-  "list_same": 83,
+  "list": 109,
+  "list_same": 93,
   "markets_MONEY": 5,
   "markets_SPREAD": 74,
   "markets_TEAM_TOTAL": 21,
-  "markets_TOTAL": 102
+  "markets_TOTAL": 102,
+  "tape_newest_first": 4,
+  "trade": 6
  }
 }
