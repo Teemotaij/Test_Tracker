@@ -1,7 +1,7 @@
 {
  "budget_s": 780.0,
  "calls": {
-  "api.novig.com": 389
+  "api.novig.com": 409
  },
  "deferred": {},
  "errors": [],
@@ -23,21 +23,21 @@
   "events_mine": 15
  },
  "rate_limit_waits": {
-  "api.novig.com": 8
+  "api.novig.com": 9
  },
- "seconds": 187.5,
- "started": "2026-11-13T04:14:36Z",
+ "seconds": 197.0,
+ "started": "2026-11-13T04:27:10Z",
  "written": {
-  "book": 311,
-  "book_same": 27,
+  "book": 262,
+  "book_same": 106,
   "event_same": 15,
-  "list": 311,
-  "list_same": 202,
-  "markets_MONEY": 10,
-  "markets_SPREAD": 221,
-  "markets_TEAM_TOTAL": 30,
-  "markets_TOTAL": 252,
-  "tape_newest_first": 23,
-  "trade": 109
+  "list": 257,
+  "list_same": 274,
+  "markets_MONEY": 13,
+  "markets_SPREAD": 223,
+  "markets_TEAM_TOTAL": 39,
+  "markets_TOTAL": 256,
+  "tape_newest_first": 13,
+  "trade": 38
  }
 }
