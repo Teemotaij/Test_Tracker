@@ -1,10 +1,12 @@
 {
  "budget_s": 780.0,
  "calls": {
-  "gateway.polymarket.us": 1255
+  "gateway.polymarket.us": 1
  },
  "deferred": {},
- "errors": [],
+ "errors": [
+  "pass: HTTPError: HTTP Error 403: Forbidden"
+ ],
  "final_pause": {
   "api.elections.kalshi.com": 0.07,
   "api.novig.com": 0.45,
@@ -17,29 +19,11 @@
   "sports.core.api.espn.com": 0.03
  },
  "job": "pmus",
- "notes": {
-  "fast_markets": 0,
-  "fast_sweeps": 0,
-  "leagues": [
-   "cbb"
-  ]
- },
+ "notes": {},
  "rate_limit_waits": {},
- "seconds": 77.1,
- "started": "2026-11-15T05:26:59Z",
+ "seconds": 0.1,
+ "started": "2026-11-15T05:46:19Z",
  "written": {
-  "book": 1128,
-  "book_same": 64,
-  "event": 1,
-  "event_same": 721,
-  "events_full": 54,
-  "list": 994,
-  "list_same": 2223,
-  "markets_basketball_game_race_to_points": 480,
-  "markets_basketball_team_full_game_spread": 894,
-  "markets_basketball_team_full_game_total": 923,
-  "markets_basketball_team_full_game_winner": 722,
-  "markets_basketball_team_total_points": 198,
-  "sports": 1
+  "errors": 1
  }
 }
