@@ -1,13 +1,13 @@
 {
  "budget_s": 780.0,
  "calls": {
-  "api.novig.com": 614
+  "api.novig.com": 596
  },
  "deferred": {},
  "errors": [],
  "final_pause": {
   "api.elections.kalshi.com": 0.07,
-  "api.novig.com": 0.45,
+  "api.novig.com": 0.6159500000000001,
   "clob.polymarket.com": 0.05,
   "data-api.polymarket.com": 0.08,
   "data.novig.com": 0.2,
@@ -25,22 +25,22 @@
  "rate_limit_waits": {
   "api.novig.com": 14
  },
- "seconds": 297.3,
- "started": "2026-11-17T13:13:14Z",
+ "seconds": 288.2,
+ "started": "2026-11-17T13:29:27Z",
  "written": {
-  "book": 515,
-  "book_same": 27,
+  "book": 466,
+  "book_same": 76,
   "event_same": 14,
-  "list": 373,
-  "list_same": 211,
+  "list": 268,
+  "list_same": 330,
   "markets_MONEY": 11,
-  "markets_MONEY_1H": 4,
+  "markets_MONEY_1H": 8,
   "markets_SPREAD": 215,
-  "markets_SPREAD_1H": 9,
-  "markets_TEAM_TOTAL": 54,
-  "markets_TOTAL": 280,
-  "markets_TOTAL_1H": 11,
-  "tape_newest_first": 41,
-  "trade": 203
+  "markets_SPREAD_1H": 10,
+  "markets_TEAM_TOTAL": 56,
+  "markets_TOTAL": 283,
+  "markets_TOTAL_1H": 15,
+  "tape_newest_first": 25,
+  "trade": 84
  }
 }
