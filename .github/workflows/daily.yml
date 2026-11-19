@@ -22,7 +22,7 @@ permissions:
 jobs:
   daily:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 50
     steps:
       - uses: actions/checkout@v5
         with:
@@ -43,6 +43,22 @@ jobs:
         with:
           path: state
           key: state-novig_daily2-${{ github.run_id }}
+
+      # TENNIS (TJ 19 Nov 2026): the same daily files, ATP + WTA rows (in-play trades included), own state.
+      - uses: actions/cache/restore@v4
+        with:
+          path: state_tennis
+          key: state-novig_daily_tennis-${{ github.run_id }}
+          restore-keys: state-novig_daily_tennis-
+
+      - name: Read tennis
+        run: python3 record.py --sport tennis --job novig_daily --out out --state state_tennis/state.json --budget 1200
+
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: state_tennis
+          key: state-novig_daily_tennis-${{ github.run_id }}
 
       - uses: actions/checkout@v5
         with:

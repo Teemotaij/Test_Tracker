@@ -20,6 +20,7 @@ at least every STALE_MIN minutes. Markets nearest their start are read first, so
     python3 record.py --job novig --shard 0 --shards 4
     python3 record.py --job kalshi | pmus | poly | espn
     python3 record.py --job novig_daily              # the venue's own daily trade files, NCAAB rows only
+    python3 record.py --sport tennis --job novig|novig_daily|kalshi   # tennis: Novig ATP+WTA, Kalshi match series (job name *_tennis)
 """
 import argparse, csv, datetime as dt, gzip, hashlib, io, json, os, re, sys, time, urllib.error, urllib.parse, urllib.request
 
@@ -36,6 +37,8 @@ POLY_SERIES = 10470
 ESPN_SITE = "https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball"
 ESPN_CORE = "https://sports.core.api.espn.com/v2/sports/basketball/leagues/mens-college-basketball"
 LEAGUE = "NCAAB"
+LEAGUES = (LEAGUE,)                                                # --sport tennis: ("ATP", "WTA"); Novig files "ATP" incl. Challengers + qualifying
+TENNIS_SERIES = ("KXATPMATCH", "KXATPCHALLENGERMATCH", "KXWTAMATCH", "KXWTACHALLENGERMATCH")
 DAILY_FROM = "2026-11-01"
 
 EVENT_KEYS = ("id", "slug", "ticker", "title", "startDate", "startTime", "endDate", "gameStartTime", "active", "closed", "ended", "live",
@@ -265,7 +268,11 @@ def new_trades(r, key, pages_iter, cap_pages):
 
 
 def job_novig(r, shard, shards):
-    events = novig_pages(r, "/v3/public/catalog/events", dict(league=LEAGUE, status="OPEN_PREGAME", limit=200))
+    events = []
+    for lg in LEAGUES:
+        for e in novig_pages(r, "/v3/public/catalog/events", dict(league=lg, status="OPEN_PREGAME", limit=200)):
+            e.setdefault("league", lg)
+            events.append(e)
     mine = [e for e in events if shard_of(e.get("eventId"), shards) == shard]
     r.notes.update(events_listed=len(events), events_mine=len(mine))
     mine.sort(key=lambda e: e.get("startsTs") or 0)
@@ -278,7 +285,7 @@ def job_novig(r, shard, shards):
             continue
         h = hours_to(e.get("startsTs"))
         try:
-            ms = novig_pages(r, "/v3/public/catalog/markets", dict(league=LEAGUE, event=e["eventId"], limit=200))
+            ms = novig_pages(r, "/v3/public/catalog/markets", dict(league=e.get("league") or LEAGUE, event=e["eventId"], limit=200))
         except Exception as ex:
             r.err(f"markets {e['eventId']}", ex)
             continue
@@ -355,7 +362,7 @@ def job_novig_daily(r):
                 lg, mi = tr_hdr.index("league"), tr_hdr.index("marketId")
                 for row in rd:
                     n_all += 1
-                    if len(row) > lg and row[lg] == LEAGUE:
+                    if len(row) > lg and row[lg] in LEAGUES:
                         tr_rows.append(row)
                         ids.add(row[mi])
             mk_rows, mk_hdr = [], []
@@ -371,7 +378,7 @@ def job_novig_daily(r):
             base = os.path.join(r.out, "data", "novig_daily", day)
             os.makedirs(base, exist_ok=True)
             for name, hdr, rows in (("markets", mk_hdr, mk_rows), ("trades", tr_hdr, tr_rows)):
-                with gzip.open(os.path.join(base, f"{name}_{LEAGUE.lower()}.csv.gz"), "wt", encoding="utf-8", newline="") as f:
+                with gzip.open(os.path.join(base, f"{name}_{'_'.join(x.lower() for x in LEAGUES)}.csv.gz"), "wt", encoding="utf-8", newline="") as f:
                     w = csv.writer(f)
                     w.writerow(hdr)
                     w.writerows(rows)
@@ -673,8 +680,15 @@ def main():
     ap.add_argument("--out", default="out")
     ap.add_argument("--state", default="state/state.json")
     ap.add_argument("--budget", type=float, default=780.0)
+    ap.add_argument("--sport", default="cbb", choices=["cbb", "tennis"])
     a = ap.parse_args()
-    name = a.job if a.shards == 1 else f"{a.job}-{a.shard}"
+    global LEAGUES, KALSHI_SERIES
+    if a.sport == "tennis":                     # tennis (TJ 19 Nov 2026): Novig ATP + WTA, Kalshi's four match series; same record format
+        if a.job not in ("novig", "novig_daily", "kalshi"):
+            raise SystemExit(f"--sport tennis supports novig, novig_daily, kalshi (not {a.job})")
+        LEAGUES, KALSHI_SERIES = ("ATP", "WTA"), TENNIS_SERIES
+    base_name = a.job if a.sport == "cbb" else f"{a.job}_tennis"
+    name = base_name if a.shards == 1 else f"{base_name}-{a.shard}"
     r = Rec(name, a.out, a.state, a.budget)
     try:
         if a.job == "novig":

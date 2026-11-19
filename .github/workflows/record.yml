@@ -25,17 +25,22 @@ jobs:
     timeout-minutes: 17
     strategy:
       fail-fast: false
-      max-parallel: 5
+      max-parallel: 7
       matrix:
+        # ck = the state-cache / artifact name: unchanged for the basketball jobs (their saved state stays valid); *_tennis for tennis
         include:
-          - { job: novig, shard: 0, shards: 4 }
-          - { job: novig, shard: 1, shards: 4 }
-          - { job: novig, shard: 2, shards: 4 }
-          - { job: novig, shard: 3, shards: 4 }
-          - { job: kalshi, shard: 0, shards: 1 }
-          - { job: pmus, shard: 0, shards: 1 }
-          - { job: poly, shard: 0, shards: 1 }
-          - { job: espn, shard: 0, shards: 1 }
+          - { job: novig, shard: 0, shards: 4, sport: cbb, ck: novig }
+          - { job: novig, shard: 1, shards: 4, sport: cbb, ck: novig }
+          - { job: novig, shard: 2, shards: 4, sport: cbb, ck: novig }
+          - { job: novig, shard: 3, shards: 4, sport: cbb, ck: novig }
+          - { job: kalshi, shard: 0, shards: 1, sport: cbb, ck: kalshi }
+          - { job: pmus, shard: 0, shards: 1, sport: cbb, ck: pmus }
+          - { job: poly, shard: 0, shards: 1, sport: cbb, ck: poly }
+          - { job: espn, shard: 0, shards: 1, sport: cbb, ck: espn }
+          # TENNIS (TJ 19 Nov 2026): Novig ATP + WTA (Challengers and qualifying sit under ATP), Kalshi's four match series.
+          - { job: novig, shard: 0, shards: 2, sport: tennis, ck: novig_tennis }
+          - { job: novig, shard: 1, shards: 2, sport: tennis, ck: novig_tennis }
+          - { job: kalshi, shard: 0, shards: 1, sport: tennis, ck: kalshi_tennis }
     steps:
       - uses: actions/checkout@v5
         with:
@@ -45,23 +50,23 @@ jobs:
       - uses: actions/cache/restore@v4
         with:
           path: state
-          key: state-${{ matrix.job }}-${{ matrix.shard }}-${{ github.run_id }}
-          restore-keys: state-${{ matrix.job }}-${{ matrix.shard }}-
+          key: state-${{ matrix.ck }}-${{ matrix.shard }}-${{ github.run_id }}
+          restore-keys: state-${{ matrix.ck }}-${{ matrix.shard }}-
 
       # Standard library only: no setup-python, no pip.
       - name: Read
-        run: python3 record.py --job ${{ matrix.job }} --shard ${{ matrix.shard }} --shards ${{ matrix.shards }} --out out --state state/state.json --budget 780
+        run: python3 record.py --sport ${{ matrix.sport }} --job ${{ matrix.job }} --shard ${{ matrix.shard }} --shards ${{ matrix.shards }} --out out --state state/state.json --budget 780
 
       - uses: actions/cache/save@v4
         if: always()
         with:
           path: state
-          key: state-${{ matrix.job }}-${{ matrix.shard }}-${{ github.run_id }}
+          key: state-${{ matrix.ck }}-${{ matrix.shard }}-${{ github.run_id }}
 
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: out-${{ matrix.job }}-${{ matrix.shard }}
+          name: out-${{ matrix.ck }}-${{ matrix.shard }}
           path: out
           retention-days: 1
           if-no-files-found: ignore
