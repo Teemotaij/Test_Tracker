@@ -1,7 +1,7 @@
 {
  "budget_s": 780.0,
  "calls": {
-  "api.novig.com": 366
+  "api.novig.com": 428
  },
  "deferred": {},
  "errors": [],
@@ -19,30 +19,30 @@
  "job": "novig_tennis-1",
  "notes": {
   "book_depth": 20,
-  "events_listed": 48,
-  "events_mine": 25
+  "events_listed": 47,
+  "events_mine": 24
  },
  "rate_limit_waits": {
-  "api.novig.com": 8
+  "api.novig.com": 9
  },
- "seconds": 176.5,
- "started": "2026-11-19T11:46:29Z",
+ "seconds": 206.2,
+ "started": "2026-11-19T12:20:00Z",
  "written": {
-  "book": 170,
-  "book_same": 150,
-  "event": 1,
-  "event_same": 24,
-  "list": 144,
-  "list_same": 307,
-  "markets_FIRST_SET_MONEYLINE": 24,
-  "markets_MONEY": 24,
+  "book": 189,
+  "book_same": 196,
+  "event": 2,
+  "event_same": 22,
+  "list": 205,
+  "list_same": 230,
+  "markets_FIRST_SET_MONEYLINE": 23,
+  "markets_MONEY": 23,
   "markets_PLAYER_GAMES_WON": 2,
-  "markets_SET_SPREAD": 25,
-  "markets_SPREAD": 171,
-  "markets_TOTAL": 127,
-  "markets_TOTAL_SETS": 21,
+  "markets_SET_SPREAD": 24,
+  "markets_SPREAD": 164,
+  "markets_TOTAL": 122,
+  "markets_TOTAL_SETS": 20,
   "markets_WINNER": 57,
-  "tape_newest_first": 10,
-  "trade": 25
+  "tape_newest_first": 8,
+  "trade": 15
  }
 }
