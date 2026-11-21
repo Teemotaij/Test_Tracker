@@ -1,7 +1,7 @@
 {
  "budget_s": 780.0,
  "calls": {
-  "api.elections.kalshi.com": 74
+  "api.elections.kalshi.com": 77
  },
  "deferred": {},
  "errors": [],
@@ -23,16 +23,16 @@
  "rate_limit_waits": {
   "api.elections.kalshi.com": 1
  },
- "seconds": 9.1,
- "started": "2026-11-21T01:47:17Z",
+ "seconds": 9.9,
+ "started": "2026-11-21T02:19:40Z",
  "written": {
-  "book": 39,
-  "list": 33,
-  "list_same": 7,
+  "book": 40,
+  "list": 39,
+  "list_same": 1,
   "markets_KXATPCHALLENGERMATCH": 16,
   "markets_KXATPMATCH": 4,
   "markets_KXWTAMATCH": 20,
-  "tape_newest_first": 22,
-  "trade": 8093
+  "tape_newest_first": 30,
+  "trade": 1492
  }
 }
