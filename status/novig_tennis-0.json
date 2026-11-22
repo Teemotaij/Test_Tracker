@@ -1,13 +1,13 @@
 {
  "budget_s": 780.0,
  "calls": {
-  "api.novig.com": 305
+  "api.novig.com": 441
  },
  "deferred": {},
  "errors": [],
  "final_pause": {
   "api.elections.kalshi.com": 0.07,
-  "api.novig.com": 0.45,
+  "api.novig.com": 0.5452961063194999,
   "clob.polymarket.com": 0.05,
   "data-api.polymarket.com": 0.08,
   "data.novig.com": 0.2,
@@ -19,28 +19,29 @@
  "job": "novig_tennis-0",
  "notes": {
   "book_depth": 20,
-  "events_listed": 109,
-  "events_mine": 49
+  "events_listed": 113,
+  "events_mine": 50
  },
  "rate_limit_waits": {
-  "api.novig.com": 6
+  "api.novig.com": 10
  },
- "seconds": 146.1,
- "started": "2026-11-21T23:45:49Z",
+ "seconds": 213.1,
+ "started": "2026-11-22T00:36:00Z",
  "written": {
-  "book": 66,
-  "book_same": 180,
-  "event_same": 49,
-  "list": 59,
-  "list_same": 373,
-  "markets_FIRST_SET_MONEYLINE": 47,
-  "markets_MONEY": 47,
-  "markets_SET_SPREAD": 35,
-  "markets_SPREAD": 110,
-  "markets_TOTAL": 108,
-  "markets_TOTAL_SETS": 14,
+  "book": 96,
+  "book_same": 278,
+  "event": 3,
+  "event_same": 47,
+  "list": 135,
+  "list_same": 313,
+  "markets_FIRST_SET_MONEYLINE": 48,
+  "markets_MONEY": 48,
+  "markets_SET_SPREAD": 36,
+  "markets_SPREAD": 117,
+  "markets_TOTAL": 113,
+  "markets_TOTAL_SETS": 15,
   "markets_WINNER": 71,
-  "tape_newest_first": 2,
-  "trade": 2
+  "tape_newest_first": 5,
+  "trade": 14
  }
 }
