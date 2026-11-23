@@ -1,10 +1,12 @@
 {
  "budget_s": 780.0,
  "calls": {
-  "gateway.polymarket.us": 3749
+  "gateway.polymarket.us": 3602
  },
  "deferred": {},
- "errors": [],
+ "errors": [
+  "book tsc-cbb-mdes-yngst-2026-11-23-147pt5: HTTPError: HTTP Error 404: Not Found"
+ ],
  "final_pause": {
   "api.elections.kalshi.com": 0.07,
   "api.novig.com": 0.45,
@@ -19,31 +21,32 @@
  "job": "pmus",
  "notes": {
   "fast_markets": 167,
-  "fast_sweeps": 11,
+  "fast_sweeps": 12,
   "leagues": [
    "cbb"
   ]
  },
  "rate_limit_waits": {},
- "seconds": 764.9,
- "started": "2026-11-23T02:19:48Z",
+ "seconds": 764.0,
+ "started": "2026-11-23T02:32:56Z",
  "written": {
-  "bbo": 607,
-  "bbo_same": 1230,
-  "book": 1651,
-  "book_same": 174,
-  "event": 5,
-  "event_same": 642,
-  "events_full": 79,
-  "list": 1446,
-  "list_same": 1811,
-  "markets_basketball_game_race_to_points": 716,
-  "markets_basketball_team_first_half_spread": 20,
-  "markets_basketball_team_first_half_total": 20,
-  "markets_basketball_team_full_game_spread": 800,
-  "markets_basketball_team_full_game_total": 832,
-  "markets_basketball_team_full_game_winner": 647,
-  "markets_basketball_team_total_points": 222,
+  "bbo": 749,
+  "bbo_same": 1255,
+  "book": 1297,
+  "book_same": 214,
+  "errors": 1,
+  "event": 3,
+  "event_same": 643,
+  "events_full": 78,
+  "list": 1263,
+  "list_same": 2010,
+  "markets_basketball_game_race_to_points": 714,
+  "markets_basketball_team_first_half_spread": 15,
+  "markets_basketball_team_first_half_total": 15,
+  "markets_basketball_team_full_game_spread": 818,
+  "markets_basketball_team_full_game_total": 849,
+  "markets_basketball_team_full_game_winner": 646,
+  "markets_basketball_team_total_points": 216,
   "sports": 1
  }
 }
