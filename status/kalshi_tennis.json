@@ -1,12 +1,12 @@
 {
  "budget_s": 780.0,
  "calls": {
-  "api.elections.kalshi.com": 182
+  "api.elections.kalshi.com": 160
  },
  "deferred": {},
  "errors": [],
  "final_pause": {
-  "api.elections.kalshi.com": 0.0950810291892901,
+  "api.elections.kalshi.com": 0.10177777788818594,
   "api.novig.com": 0.45,
   "clob.polymarket.com": 0.05,
   "data-api.polymarket.com": 0.08,
@@ -21,16 +21,17 @@
   "markets_open": 100
  },
  "rate_limit_waits": {
-  "api.elections.kalshi.com": 3
+  "api.elections.kalshi.com": 2
  },
- "seconds": 29.0,
- "started": "2026-11-23T16:17:18Z",
+ "seconds": 25.0,
+ "started": "2026-11-23T16:30:36Z",
  "written": {
   "book": 100,
-  "list": 100,
+  "list": 90,
+  "list_same": 10,
   "markets_KXATPCHALLENGERMATCH": 90,
   "markets_KXWTACHALLENGERMATCH": 10,
-  "tape_newest_first": 68,
-  "trade": 10003
+  "tape_newest_first": 53,
+  "trade": 5110
  }
 }
