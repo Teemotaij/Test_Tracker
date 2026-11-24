@@ -1,12 +1,12 @@
 {
  "budget_s": 780.0,
  "calls": {
-  "api.elections.kalshi.com": 209
+  "api.elections.kalshi.com": 170
  },
  "deferred": {},
  "errors": [],
  "final_pause": {
-  "api.elections.kalshi.com": 0.09394841684946582,
+  "api.elections.kalshi.com": 0.11392558111413931,
   "api.novig.com": 0.45,
   "clob.polymarket.com": 0.05,
   "data-api.polymarket.com": 0.08,
@@ -18,20 +18,21 @@
  },
  "job": "kalshi_tennis",
  "notes": {
-  "markets_open": 134
+  "markets_open": 140
  },
  "rate_limit_waits": {
-  "api.elections.kalshi.com": 3
+  "api.elections.kalshi.com": 1
  },
- "seconds": 26.4,
- "started": "2026-11-24T06:27:16Z",
+ "seconds": 19.5,
+ "started": "2026-11-24T06:40:48Z",
  "written": {
-  "book": 134,
-  "list": 121,
-  "list_same": 13,
-  "markets_KXATPCHALLENGERMATCH": 122,
+  "book": 138,
+  "book_same": 2,
+  "list": 89,
+  "list_same": 51,
+  "markets_KXATPCHALLENGERMATCH": 128,
   "markets_KXWTACHALLENGERMATCH": 12,
-  "tape_newest_first": 62,
-  "trade": 5875
+  "tape_newest_first": 21,
+  "trade": 7087
  }
 }
