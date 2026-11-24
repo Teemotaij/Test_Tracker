@@ -1,7 +1,7 @@
 {
  "budget_s": 780.0,
  "calls": {
-  "api.novig.com": 684
+  "api.novig.com": 815
  },
  "deferred": {},
  "errors": [],
@@ -20,29 +20,28 @@
  "notes": {
   "book_depth": 20,
   "events_listed": 140,
-  "events_mine": 47
+  "events_mine": 48
  },
  "rate_limit_waits": {
-  "api.novig.com": 15
+  "api.novig.com": 19
  },
- "seconds": 331.3,
- "started": "2026-11-24T01:27:00Z",
+ "seconds": 395.3,
+ "started": "2026-11-24T01:45:19Z",
  "written": {
-  "book": 488,
-  "book_same": 109,
-  "event": 1,
-  "event_same": 46,
-  "list": 563,
-  "list_same": 437,
+  "book": 498,
+  "book_same": 218,
+  "event_same": 48,
+  "list": 511,
+  "list_same": 529,
   "markets_CHAMPIONSHIP_WINNER": 104,
   "markets_MONEY": 46,
-  "markets_MONEY_1H": 2,
-  "markets_SPREAD": 332,
-  "markets_SPREAD_1H": 2,
-  "markets_TEAM_TOTAL": 55,
-  "markets_TOTAL": 451,
-  "markets_TOTAL_1H": 8,
-  "tape_newest_first": 23,
-  "trade": 66
+  "markets_MONEY_1H": 3,
+  "markets_SPREAD": 344,
+  "markets_SPREAD_1H": 4,
+  "markets_TEAM_TOTAL": 59,
+  "markets_TOTAL": 470,
+  "markets_TOTAL_1H": 10,
+  "tape_newest_first": 30,
+  "trade": 99
  }
 }
