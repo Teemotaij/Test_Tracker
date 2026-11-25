@@ -1,7 +1,7 @@
 {
  "budget_s": 780.0,
  "calls": {
-  "gateway.polymarket.us": 6615
+  "gateway.polymarket.us": 7428
  },
  "deferred": {},
  "errors": [],
@@ -18,32 +18,32 @@
  },
  "job": "pmus",
  "notes": {
-  "fast_markets": 497,
-  "fast_sweeps": 6,
+  "fast_markets": 415,
+  "fast_sweeps": 10,
   "leagues": [
    "cbb"
   ]
  },
  "rate_limit_waits": {},
  "seconds": 765.0,
- "started": "2026-11-25T02:32:17Z",
+ "started": "2026-11-25T02:45:31Z",
  "written": {
-  "bbo": 1101,
-  "bbo_same": 1807,
-  "book": 3318,
-  "book_same": 289,
-  "event": 22,
-  "event_same": 588,
-  "events_full": 92,
-  "list": 3018,
-  "list_same": 2237,
-  "markets_basketball_game_race_to_points": 610,
-  "markets_basketball_team_first_half_spread": 105,
-  "markets_basketball_team_first_half_total": 105,
+  "bbo": 980,
+  "bbo_same": 2956,
+  "book": 3155,
+  "book_same": 238,
+  "event": 19,
+  "event_same": 590,
+  "events_full": 91,
+  "list": 2826,
+  "list_same": 2504,
+  "markets_basketball_game_race_to_points": 598,
+  "markets_basketball_team_first_half_spread": 100,
+  "markets_basketball_team_first_half_total": 100,
   "markets_basketball_team_full_game_spread": 1733,
-  "markets_basketball_team_full_game_total": 1699,
-  "markets_basketball_team_full_game_winner": 610,
-  "markets_basketball_team_total_points": 393,
+  "markets_basketball_team_full_game_total": 1764,
+  "markets_basketball_team_full_game_winner": 609,
+  "markets_basketball_team_total_points": 426,
   "sports": 1
  }
 }
