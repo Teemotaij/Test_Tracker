@@ -1,10 +1,12 @@
 {
  "budget_s": 780.0,
  "calls": {
-  "api.elections.kalshi.com": 65
+  "api.elections.kalshi.com": 82
  },
  "deferred": {},
- "errors": [],
+ "errors": [
+  "markets KXWTAMATCH: HTTPError: HTTP Error 500: Internal Server Error"
+ ],
  "final_pause": {
   "api.elections.kalshi.com": 0.07,
   "api.novig.com": 0.45,
@@ -21,15 +23,15 @@
   "markets_open": 54
  },
  "rate_limit_waits": {},
- "seconds": 5.1,
- "started": "2026-11-26T07:47:33Z",
+ "seconds": 28.8,
+ "started": "2026-11-26T08:19:07Z",
  "written": {
   "book": 54,
-  "list": 48,
-  "list_same": 6,
+  "errors": 1,
+  "list": 54,
   "markets_KXATPCHALLENGERMATCH": 48,
   "markets_KXWTACHALLENGERMATCH": 6,
-  "tape_newest_first": 7,
-  "trade": 19
+  "tape_newest_first": 19,
+  "trade": 63
  }
 }
