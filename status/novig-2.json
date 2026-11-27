@@ -1,7 +1,7 @@
 {
  "budget_s": 780.0,
  "calls": {
-  "api.novig.com": 735
+  "api.novig.com": 704
  },
  "deferred": {},
  "errors": [],
@@ -19,28 +19,28 @@
  "job": "novig-2",
  "notes": {
   "book_depth": 20,
-  "events_listed": 142,
-  "events_mine": 38
+  "events_listed": 139,
+  "events_mine": 37
  },
  "rate_limit_waits": {
-  "api.novig.com": 17
+  "api.novig.com": 16
  },
- "seconds": 355.7,
- "started": "2026-11-27T19:45:13Z",
+ "seconds": 341.2,
+ "started": "2026-11-27T20:13:00Z",
  "written": {
   "book": 580,
-  "book_same": 50,
-  "event_same": 38,
-  "list": 410,
-  "list_same": 326,
-  "markets_MONEY": 38,
-  "markets_MONEY_1H": 11,
-  "markets_SPREAD": 198,
-  "markets_SPREAD_1H": 19,
-  "markets_TEAM_TOTAL": 97,
-  "markets_TOTAL": 340,
-  "markets_TOTAL_1H": 33,
-  "tape_newest_first": 48,
-  "trade": 117
+  "book_same": 21,
+  "event_same": 37,
+  "list": 466,
+  "list_same": 234,
+  "markets_MONEY": 37,
+  "markets_MONEY_1H": 10,
+  "markets_SPREAD": 182,
+  "markets_SPREAD_1H": 16,
+  "markets_TEAM_TOTAL": 90,
+  "markets_TOTAL": 333,
+  "markets_TOTAL_1H": 32,
+  "tape_newest_first": 46,
+  "trade": 193
  }
 }
