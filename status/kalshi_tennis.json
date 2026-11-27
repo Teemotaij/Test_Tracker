@@ -1,7 +1,7 @@
 {
  "budget_s": 780.0,
  "calls": {
-  "api.elections.kalshi.com": 53
+  "api.elections.kalshi.com": 52
  },
  "deferred": {},
  "errors": [],
@@ -18,18 +18,18 @@
  },
  "job": "kalshi_tennis",
  "notes": {
-  "markets_open": 32
+  "markets_open": 34
  },
  "rate_limit_waits": {},
- "seconds": 5.8,
- "started": "2026-11-27T12:35:44Z",
+ "seconds": 3.6,
+ "started": "2026-11-27T12:48:30Z",
  "written": {
-  "book": 32,
-  "list": 28,
-  "list_same": 4,
-  "markets_KXATPCHALLENGERMATCH": 24,
+  "book": 34,
+  "list": 29,
+  "list_same": 5,
+  "markets_KXATPCHALLENGERMATCH": 26,
   "markets_KXWTACHALLENGERMATCH": 8,
-  "tape_newest_first": 17,
-  "trade": 1338
+  "tape_newest_first": 14,
+  "trade": 1292
  }
 }
