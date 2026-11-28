@@ -2,7 +2,7 @@
  "budget_s": 780.0,
  "calls": {
   "site.api.espn.com": 5,
-  "sports.core.api.espn.com": 153
+  "sports.core.api.espn.com": 147
  },
  "deferred": {},
  "errors": [],
@@ -22,12 +22,12 @@
   "games": 217
  },
  "rate_limit_waits": {},
- "seconds": 22.7,
- "started": "2026-11-28T00:52:19Z",
+ "seconds": 5.0,
+ "started": "2026-11-28T01:13:48Z",
  "written": {
-  "event": 30,
-  "event_same": 187,
-  "odds": 16,
+  "event": 25,
+  "event_same": 192,
+  "odds": 10,
   "odds_same": 137
  }
 }
